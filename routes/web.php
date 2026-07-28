@@ -1,7 +1,9 @@
 <?php
 
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\Pegawai;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -26,6 +28,22 @@ Route::get('/pegawai/detail/{nama?}', function (?string $nama = 'Muhammad Nurhab
 Route::get('/pegawai/cek_absensi/maret', function (){
     return "Absensi Pegawai Bulan Maret";
 })->name('cek_absensi');
+
+Route::get('/coba_query', function(){
+    // $pegawai = Pegawai::all();
+    // dd($pegawai->toArray());
+
+    // $pegawai = Pegawai::find(20);
+    // $pegawai = Pegawai::where('nama_pegawai', "Mila Melani S.E.I")->first();
+    // $pegawai = Pegawai::where('umur','>',25)->get();
+    // pegawai =Pegawai::where('nama_pegawai', 'Kacung Marpaung')->delete();
+    // Pegawai::destroy(20);
+    Pegawai::where('id', 16)->update([
+        'nama_pegawai' => 'Mila Melani S.E.I'
+    ]);
+
+    // dd($pegawai->toArray());
+});
 
 Route::fallback(function () {
     return view('404');
