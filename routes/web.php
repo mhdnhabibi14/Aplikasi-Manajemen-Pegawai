@@ -38,9 +38,9 @@ Route::get('/coba_query', function(){
     // $pegawai = Pegawai::where('umur','>',25)->get();
     // pegawai =Pegawai::where('nama_pegawai', 'Kacung Marpaung')->delete();
     // Pegawai::destroy(20);
-    Pegawai::where('id', 16)->update([
-        'nama_pegawai' => 'Mila Melani S.E.I'
-    ]);
+    // Pegawai::where('id', 16)->update([
+    //     'nama_pegawai' => 'Mila Melani S.E.I'
+    // ]);
 
     // dd($pegawai->toArray());
 });
