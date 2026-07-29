@@ -3,8 +3,11 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Data Pegawai</h4>
+                    <div class="card-tools">
+                        <a href="{{ route('pegawai.create') }}" class="btn btn-primary">Tambah Pegawai</a>
+                    </div>    
             </div>
             <div class="card-body">
                 <table class="table table-bordered" id="table">
