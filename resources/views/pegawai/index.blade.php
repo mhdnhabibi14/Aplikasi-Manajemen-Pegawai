@@ -4,7 +4,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="card-title">Data Pegawai</h4>
+                <h4 class="card-title">Form Data Pegawai</h4>
                     <div class="card-tools">
                         <a href="{{ route('pegawai.create') }}" class="btn btn-primary">Tambah Pegawai</a>
                     </div>    
@@ -33,7 +33,14 @@
                                 <td>{{ $item->umur }}</td>
                                 <td>{{ $item->tempat_lahir }}, {{ \Carbon\Carbon::parse($item->tanggal_lahir)->locale('id')->translatedFormat('d F Y') }}</td>
                                 <td>{{ $item->alamat }}</td>
-                                <td></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Aksi</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ route('pegawai.edit', $item->id)}}">Edit</a></li>
+                                        </ul>
+                                        </div>
+                                </td>
                             </tr>
                         @endforeach    
                     </tbody>    
