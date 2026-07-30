@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.mantis')
 
 @section('content')
-    <div class="container">
+    <div class="">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Tambah Pegawai</h4>
