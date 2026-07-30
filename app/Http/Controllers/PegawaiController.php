@@ -102,6 +102,12 @@ class PegawaiController extends Controller
         $pegawai->update($request->except('nik'));
 
         //$pegawai->update($request->all());
-        return redirect()->route('pegawai.index');
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diupdate.');
+    }
+
+    public function destroy(String $id)
+    {
+        Pegawai::destroy($id);
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
 }

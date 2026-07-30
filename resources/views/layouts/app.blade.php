@@ -76,6 +76,13 @@
         </nav>
 
         <main class="py-4">
+            @if (session('success'))
+                <div class="container">
+                    <div class="alert alert-success" id="success-alert" role="alert">
+                        {{ session('success')}}
+                    </div>
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>
@@ -85,6 +92,10 @@
     <script>
         $(document).ready(function() {
             let table = new DataTable('#table');
+
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#success-alert").slideUp(500);
+            });
         });
     </script>
 </body>
