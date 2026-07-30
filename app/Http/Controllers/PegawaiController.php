@@ -53,7 +53,7 @@ class PegawaiController extends Controller
             
         ]);
         // Pegawai::create($request->all());
-        return redirect()->route('pegawai.index');
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambah');
     }
 
 
