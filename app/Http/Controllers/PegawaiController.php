@@ -43,6 +43,10 @@ class PegawaiController extends Controller
             'tempat_lahir.required' => 'Tempat Lahir Wajid diisi',
             'jenis_kelamin.required' => 'Jenis Kelamin Wajib diisi',
             'jenis_kelamin.in' => 'Jenis Kelamin Harus Laki-laki atau Perempuan',
+            'foto.required' => 'Foto Wajib diupload',
+            'foto.image' => 'File Foto Tidak Sesuai',
+            'foto.mimes' => 'Format Foto Tidak Sesuai',
+            'foto.max' => 'Ukuran Foto Terlalu Besar',
         ]);
 
         $foto = $request->file('foto');
@@ -98,6 +102,10 @@ class PegawaiController extends Controller
             'tempat_lahir.required' => 'Tempat Lahir Wajid diisi',
             'jenis_kelamin.required' => 'Jenis Kelamin Wajib diisi',
             'jenis_kelamin.in' => 'Jenis Kelamin Harus Laki-laki atau Perempuan',
+            'foto.required' => 'Foto Wajib diupload',
+            'foto.image' => 'File Foto Tidak Sesuai',
+            'foto.mimes' => 'Format Foto Tidak Sesuai',
+            'foto.max' => 'Ukuran Foto Terlalu Besar',
         ]);
 
         // $pegawai->update([
