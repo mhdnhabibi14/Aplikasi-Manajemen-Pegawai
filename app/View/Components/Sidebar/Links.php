@@ -1,0 +1,39 @@
+<?php
+
+namespace App\View\Components\Sidebar;
+
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
+
+class Links extends Component
+{
+    public string $title;
+    public string $route;
+    public string $icon;
+    public string $active;
+
+    public function __construct(string $title, string $route, string $icon)
+    {
+        $this->title = $title;
+        $this->route = $route;
+        $this->icon = $icon;
+        $basePath = $this->generatePath($route);
+        $this->active = request()->routeIs($basePath)  ? 'bg-blue-300 text-white' : '';
+    }
+
+    public function generatePath(string $route)
+    {
+        if (str_contains($route, '.')) {
+                $path = explode('.', $route);
+                return $path[0] . '.*';
+            } else {
+                return $route;
+            }
+    }
+
+    public function render(): View|Closure|string
+    {
+        return view('components.sidebar.links');
+    }
+}
