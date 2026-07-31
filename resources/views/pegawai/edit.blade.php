@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{ route('pegawai.update', $pegawai->id) }}" method="POST" class="">
+                <form action="{{ route('pegawai.update', $pegawai->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group my-2">
@@ -51,6 +51,12 @@
                         <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control
                         @error ('tanggal_lahir') is-invalid @enderror" value="{{ $pegawai->tanggal_lahir}}">
                         @error ('tanggal_lahir') <small class="text-danger">{{ $message}}</small>@enderror
+                    </div>
+                    <div class="form-group my-2">
+                        <label for="foto">Foto Pegawai</label>
+                        <input type="file" id="foto" name="foto" class="form-control
+                        @error ('foto') is-invalid @enderror">
+                        @error ('foto') <small class="text-danger">{{ $message}}</small>@enderror
                     </div>
                     <div class="form-group my-2">
                         <label for="alamat">Alamat</label>

@@ -20,6 +20,7 @@
                             <th>Umur</th>
                             <th>Tempat, Tanggal Lahir</th>
                             <th>Alamat</th>
+                            <th>Foto Pegawai</th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
@@ -33,6 +34,7 @@
                                 <td>{{ $item->umur }}</td>
                                 <td>{{ $item->tempat_lahir }}, {{ \Carbon\Carbon::parse($item->tanggal_lahir)->locale('id')->translatedFormat('d F Y') }}</td>
                                 <td>{{ $item->alamat }}</td>
+                                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFoto{{ $item->id}}">Lihat Foto</button></td>
                                 <td>
                                     <div class="dropdown">
                                         <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Aksi</a>
@@ -76,5 +78,21 @@
                 </div>
             </div>
         </div>
+    @endforeach
+
+    @foreach ($pegawai as $item)
+    <div class="modal fade" id="modalFoto{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Foto Pegawai</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ asset('storage/foto_pegawai/'.$item->foto) }}" alt="{{ $item->foto}}" class="img-fluid">
+            </div>
+            </div>
+        </div>
+    </div>
     @endforeach
 @endsection

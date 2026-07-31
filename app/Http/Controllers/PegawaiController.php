@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PegawaiController extends Controller
 {
@@ -26,6 +28,7 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
             'tanggal_lahir' => 'required|date',
             'tempat_lahir' => 'required',
+            'foto'=> 'required|image|mimes:jpeg,png,jpg|max:2048',
             'alamat' => 'required',
         ],[
             'nama_pegawai.required' => 'Nama Pegawai Wajib diisi',
@@ -42,17 +45,24 @@ class PegawaiController extends Controller
             'jenis_kelamin.in' => 'Jenis Kelamin Harus Laki-laki atau Perempuan',
         ]);
 
-        Pegawai::create([
-            'nama_pegawai' => $request->nama_pegawai,
-            'nik' => $request->nik,
-            'umur' => $request->umur,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'tempat_lahir' => $request->tempat_lahir,
-            'alamat' => $request->alamat,
+        $foto = $request->file('foto');
+        $fileName = Str::uuid() . '.' . $foto->getClientOriginalExtension();
+
+        Storage::disk('public')->putFileAs('foto_pegawai', $foto, $fileName);
+        $newrequst = $request->all();
+        $newrequst['foto'] = $fileName;
+
+        // Pegawai::create([
+        //     'nama_pegawai' => $request->nama_pegawai,
+        //     'nik' => $request->nik,
+        //     'umur' => $request->umur,
+        //     'jenis_kelamin' => $request->jenis_kelamin,
+        //     'tanggal_lahir' => $request->tanggal_lahir,
+        //     'tempat_lahir' => $request->tempat_lahir,
+        //     'alamat' => $request->alamat,
             
-        ]);
-        // Pegawai::create($request->all());
+        // ]);
+        Pegawai::create($newrequst);
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambah');
     }
 
@@ -73,6 +83,7 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
             'tanggal_lahir' => 'required|date',
             'tempat_lahir' => 'required',
+            'foto'=> 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'alamat' => 'required',
         ], [
             'nama_pegawai.required' => 'Nama Pegawai Wajib diisi',
@@ -98,8 +109,20 @@ class PegawaiController extends Controller
         //     'alamat' => $request->alamat,
             
         // ]);
+        $fileName = $pegawai->foto;
+        $foto = $request->file('foto');
 
-        $pegawai->update($request->except('nik'));
+        if($foto) {
+            $fileName = Str::uuid() . '.' . $foto->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('foto_pegawai', $foto, $fileName);
+        } else {
+            $fileName = $pegawai->foto; 
+        }
+
+        $newrequst = $request->except('nik');
+        $newrequst['foto'] = $fileName;
+
+        $pegawai->update($newrequst);
 
         //$pegawai->update($request->all());
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diupdate.');
@@ -107,7 +130,13 @@ class PegawaiController extends Controller
 
     public function destroy(String $id)
     {
-        Pegawai::destroy($id);
+        $pegawai = Pegawai::find($id);
+
+        if($pegawai->foto != null){
+            Storage::disk('public')->delete('foto_pegawai/'. $pegawai->foto);
+        }
+
+        $pegawai->delete();
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
 }
