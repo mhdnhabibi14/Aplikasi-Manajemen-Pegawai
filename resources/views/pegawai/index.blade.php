@@ -4,7 +4,7 @@
     <div class="">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="card-title">Form Data Pegawai</h4>
+                <h4 class="card-title">Data Pegawai</h4>
                     <div class="card-tools">
                         <a href="{{ route('pegawai.create') }}" class="btn btn-primary">Tambah Pegawai</a>
                     </div>    
@@ -15,6 +15,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Pegawai</th>
+                            <th>Email</th>
                             <th>NIK</th>
                             <th>Jenis Kelamin</th>
                             <th>Umur</th>
@@ -29,6 +30,7 @@
                             <tr>
                                 <td>{{ $index + 1}}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
+                                <td>{{ $item->user->email }}</td>
                                 <td>{{ $item->nik }}</td>
                                 <td>{{ $item->jenis_kelamin }}</td>
                                 <td>{{ $item->umur }}</td>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -11,7 +13,7 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $pegawai = Pegawai::all();
+        $pegawai = Pegawai::with('user')->get();
         return view('pegawai.index', compact('pegawai'));
     }
     public function create()
@@ -23,6 +25,7 @@ class PegawaiController extends Controller
         // dd($request->all());
         $request->validate([
             'nama_pegawai' => 'required',
+            'email' => 'required|email|unique:users,email',
             'nik' => 'required|numeric|unique:pegawais,nik',
             'umur' => 'required|numeric',
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
@@ -53,8 +56,8 @@ class PegawaiController extends Controller
         $fileName = Str::uuid() . '.' . $foto->getClientOriginalExtension();
 
         Storage::disk('public')->putFileAs('foto_pegawai', $foto, $fileName);
-        $newrequst = $request->all();
-        $newrequst['foto'] = $fileName;
+        $newRequest = $request->all();
+        $newRequest['foto'] = $fileName;
 
         // Pegawai::create([
         //     'nama_pegawai' => $request->nama_pegawai,
@@ -66,7 +69,16 @@ class PegawaiController extends Controller
         //     'alamat' => $request->alamat,
             
         // ]);
-        Pegawai::create($newrequst);
+        $newData = Pegawai::create($newRequest);
+        $user = User::create([
+            'name' => $newData->nama_pegawai,
+            'email' => $request->email,
+            'password' => Hash::make('password'),
+            'pegawai_id' => $newData->id,
+        ]);
+        $newData->user_id = $user->id;
+        $newData->save();
+
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambah');
     }
 
@@ -127,10 +139,10 @@ class PegawaiController extends Controller
             $fileName = $pegawai->foto; 
         }
 
-        $newrequst = $request->except('nik');
-        $newrequst['foto'] = $fileName;
+        $newRequest = $request->except('nik');
+        $newRequest['foto'] = $fileName;
 
-        $pegawai->update($newrequst);
+        $pegawai->update($newRequest);
 
         //$pegawai->update($request->all());
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diupdate.');

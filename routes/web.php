@@ -19,6 +19,12 @@ Route::fallback(function () {
 Route::resource('pegawai', PegawaiController::class);
 
 
+// unutuk hapus semua data secara instan
+// Route::get('/truncate', function () {
+//     Pegawai::truncate();
+// });
+
+
 // Route::get('/pegawai', function () {
 //     return view('pegawai');
 // });
