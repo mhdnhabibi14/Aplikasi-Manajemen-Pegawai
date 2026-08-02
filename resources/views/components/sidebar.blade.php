@@ -9,9 +9,12 @@
         <div class="navbar-content">
         <ul class="pc-navbar">
 
-            <x-sidebar.links title='Home' icon='ti ti-dashboard' route='home' />
+            <x-sidebar.links title='Home' icon='ti ti-home' route='home' />
+            @if (auth()->user()->role->role_name == 'supervisor')
+                <x-sidebar.links title='Data Users' icon='ti ti-user' route='users.index' />
+            @endif
             <x-sidebar.links title='Data Pegawai' icon='ti ti-users' route='pegawai.index' />
-            <x-sidebar.links title='Data Bagian' icon='ti ti-users' route='bagian.index' />
+            <x-sidebar.links title='Data Bagian' icon='ti ti-briefcase' route='bagian.index' />
 
         </ul>
         </div>

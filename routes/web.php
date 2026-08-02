@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BagianController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Pegawai;
@@ -18,6 +19,8 @@ Route::fallback(function () {
 });
 
 Route::resource('pegawai', PegawaiController::class);
+Route::resource('users', UserController::class)->middleware('isSupervisor');
+Route::post('user-update-role', [UserController::class, 'updateRole'])->name('users.update-role');
 Route::resource('bagian', BagianController::class);
 
 // unutuk hapus semua data secara instan
