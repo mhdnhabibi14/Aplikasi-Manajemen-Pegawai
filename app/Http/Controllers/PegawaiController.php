@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bagian;
 use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,13 +19,15 @@ class PegawaiController extends Controller
     }
     public function create()
     {
-        return view('pegawai.create');
+        $bagians = Bagian::all();
+        return view('pegawai.create', compact('bagians'));
     }
     public function store(Request $request)
     {
         // dd($request->all());
         $request->validate([
             'nama_pegawai' => 'required',
+            'bagian_id' => 'required|exists:bagians,id',
             'email' => 'required|email|unique:users,email',
             'nik' => 'required|numeric|unique:pegawais,nik',
             'umur' => 'required|numeric',
@@ -35,6 +38,11 @@ class PegawaiController extends Controller
             'alamat' => 'required',
         ],[
             'nama_pegawai.required' => 'Nama Pegawai Wajib diisi',
+            'bagian_id.required' => 'Bagian Pegawai Wajib dipilih',
+            'bagian_id.exists' => 'Bagian Pegawai tidak valid',
+            'email.required' => 'Email Wajib diisi',
+            'email.email' => 'Email Tidak Valid',
+            'email.unique' => 'Email Sudah Terdaftar',
             'nik.required' => 'NIK Pegawai Wajid diisi',
             'nik.numeric' => 'NIK Harus Berupa Angaka',
             'nik.unique' => 'NIK Sudah Terdaftar',
@@ -88,12 +96,14 @@ class PegawaiController extends Controller
     public function edit(String $id)
     {
         $pegawai = Pegawai::find($id);
-        return view('pegawai.edit', compact('pegawai'));
+        $bagians = Bagian::all();
+        return view('pegawai.edit', compact('pegawai', 'bagians'));
     }
     public function update(Request $request, Pegawai $pegawai)
     {
         $request->validate([
             'nama_pegawai' => 'required',
+            'bagian_id' => 'required|exists:bagians,id',
             'nik' => 'required|numeric|unique:pegawais,nik,' . $pegawai->id,
             'umur' => 'required|numeric',
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
@@ -103,6 +113,8 @@ class PegawaiController extends Controller
             'alamat' => 'required',
         ], [
             'nama_pegawai.required' => 'Nama Pegawai Wajib diisi',
+            'bagian_id.required' => 'Bagian Pegawai Wajib dipilih',
+            'bagian_id.exists' => 'Bagian Pegawai tidak valid',
             'nik.required' => 'NIK Pegawai Wajid diisi',
             'nik.numeric' => 'NIK Harus Berupa Angaka',
             'nik.unique' => 'NIK Sudah Terdaftar',

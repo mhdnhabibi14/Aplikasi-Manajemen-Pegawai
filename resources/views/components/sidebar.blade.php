@@ -11,7 +11,8 @@
 
             <x-sidebar.links title='Home' icon='ti ti-dashboard' route='home' />
             <x-sidebar.links title='Data Pegawai' icon='ti ti-users' route='pegawai.index' />
-            
+            <x-sidebar.links title='Data Bagian' icon='ti ti-users' route='bagian.index' />
+
         </ul>
         </div>
     </div>

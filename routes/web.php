@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BagianController;
 use App\Http\Controllers\PegawaiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ Route::fallback(function () {
 });
 
 Route::resource('pegawai', PegawaiController::class);
-
+Route::resource('bagian', BagianController::class);
 
 // unutuk hapus semua data secara instan
 // Route::get('/truncate', function () {
