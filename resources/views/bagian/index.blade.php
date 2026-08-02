@@ -19,7 +19,8 @@
                             <td> {{ $index + 1}}</td>
                             <td> {{ $bagian->nama_bagian }}</td>
                             <td>
-                                <a href="{{ route('bagian.show', $bagian->id )}}">Detail</a>
+                                <a href="{{ route('bagian.show', $bagian->id )}}" class="btn btn-info">Detail</a>
+                                <a href="{{ route('bagian.destroy', $bagian->id )}}" class="btn btn-danger" data-confirm-delete="true">Hapus</a>
                             </td>
                         </tr>
                     @endforeach

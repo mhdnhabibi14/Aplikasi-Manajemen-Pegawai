@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PegawaiController extends Controller
 {
@@ -87,7 +88,8 @@ class PegawaiController extends Controller
         $newData->user_id = $user->id;
         $newData->save();
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambah');
+        toast('Data pegawai berhasil ditambahkan!', 'success');
+        return redirect()->route('pegawai.index');
     }
 
 
@@ -157,7 +159,8 @@ class PegawaiController extends Controller
         $pegawai->update($newRequest);
 
         //$pegawai->update($request->all());
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diupdate.');
+        toast('Data pegawai berhasil diupdate!','success');
+        return redirect()->route('pegawai.index');
     }
 
     public function destroy(String $id)
@@ -169,6 +172,7 @@ class PegawaiController extends Controller
         }
 
         $pegawai->delete();
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
+        toast('Data pegawai berhasil dihapus!','success');
+        return redirect()->route('pegawai.index');
     }
 }
